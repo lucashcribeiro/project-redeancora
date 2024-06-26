@@ -1,0 +1,28 @@
+.Nunito {
+  font-family: 'Nunito', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: bold;
+}
+.textInativeButton {
+  @apply Nunito text-astronaut-blue-950 border-solid border-2 border-astronaut-blue-950 mt-3 px-2 py-2 rounded-md;
+}
+.textActiveButton {
+  @apply bg-astronaut-blue-950 text-astronaut-blue-50 Nunito mt-3 px-2 py-2 rounded-md border-solid border-2 border-astronaut-blue-900;
+}
+
+@tailwind base;
+
+.Button {
+  @apply bg-astronaut-blue-950 py-3 px-2 rounded-2xl uppercase hover:bg-vermelho-ancora ease-in duration-300;
+}
+.textButton {
+  @apply Nunito text-astronaut-blue-50 uppercase text-xl;
+}
+
+.containerResponsive {
+  @apply container p-8;
+}
+
+@tailwind components;
+@tailwind utilities;
