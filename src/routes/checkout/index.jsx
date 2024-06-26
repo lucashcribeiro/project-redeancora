@@ -1,6 +1,8 @@
 // src/routes/checkout/index.jsx
 import React, { useState, useContext } from "react";
 import { CartContext } from "../../context/cart";
+import Qrcode from "../../../public/qr-code.png"
+import { Link } from "react-router-dom";
 
 export const Checkout = () => {
   const { cartItems, totalPrice } = useContext(CartContext);
@@ -62,20 +64,22 @@ export const Checkout = () => {
           </div>
           <div className="mt-6 mb-4 flex flex-col items-center">
             <img
-              src="/caminho/para/seu/qrcode.png"
+              src={Qrcode}
               alt="QR Code"
-              className="w-32 h-32 mb-2"
+              className="w-32 h-48 mb-2"
             />
             <p className="text-center text-gray-600">
               Baixe nosso aplicativo e ganhe desconto na sua primeira compra!
             </p>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-          >
-            Finalizar Compra
-          </button>
+          <Link to='/thanks'>
+            <button
+              type="submit"
+              className="bg-azul-ancora hover:bg-astronaut-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+            >
+              Finalizar Compra
+            </button>
+          </Link>
         </form>
       </div>
     </div>

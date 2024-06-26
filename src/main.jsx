@@ -7,6 +7,7 @@ import Loja from "./routes/loja/loja";
 import { CartProvider } from "./context/cart";
 import { register } from "swiper/element/bundle";
 import { Checkout } from "./routes/checkout";
+import Thanks from "./routes/checkout/thanks";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
     path: "/checkout",
     element: <Checkout />,
   },
+  {
+    path:'/thanks',
+    element: <Thanks />,
+  }
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
