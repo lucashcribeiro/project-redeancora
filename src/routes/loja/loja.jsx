@@ -12,6 +12,9 @@ import { useSearchParams } from "react-router-dom";
 import Partners from "../../components/partners";
 import Fuse from "fuse.js";
 
+
+import { Link } from "react-router-dom";
+
 const Loja = () => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
@@ -88,7 +91,7 @@ const Loja = () => {
                 search={search}
                 setSearch={setSearch}
               />
-
+              <Link to="/" >
               <ButtonFilter
                 texto="Nova Busca"
                 className="textInativeButton w-full m-2"
@@ -97,6 +100,7 @@ const Loja = () => {
                   setActiveInput(true);
                 }}
               ></ButtonFilter>
+              </Link>
 
               <div className="my-3">
                 <p className="font-bold">
