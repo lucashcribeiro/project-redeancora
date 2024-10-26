@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "./components/modal";
+import logo from "../public/logo.png"
 
 export default function App() {
   const [open, setOpen] = useState(false);
@@ -13,7 +14,7 @@ export default function App() {
       <div className="relative w-full h-full bg-[url('../public/app/app-bg.png')] bg-cover">
         <div className="relative z-10 p-12">
           <img
-            src="../public/logo.png"
+            src={logo}
             alt="brand"
             className="w-1/3 max-w-[260px] mb-7"
           />
