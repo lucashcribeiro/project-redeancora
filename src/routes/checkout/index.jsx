@@ -1,20 +1,17 @@
 // src/routes/checkout/index.jsx
 import React, { useState, useContext } from "react";
-import { CartContext } from "../../context/cart";
 import Qrcode from "../../../public/qr-code.png"
 import { Link } from "react-router-dom";
+import Input from "../../components/input";
 
 export const Checkout = () => {
-  const { cartItems, totalPrice } = useContext(CartContext);
+
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
     telefone: "",
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,26 +30,44 @@ export const Checkout = () => {
             Finalizar Compra
           </h2>
           <div className="mb-4">
-            <input
+          <Input
+              placeholder="Nome Completo"
+              value={formData.nome}
+              onChange={(value) => setFormData({ ...formData, nome: value})}
+              onConfirm={() => handleSubmit()}
+            />
+            {/* <input
               type="text"
               name="nome"
               placeholder="Nome Completo"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
               value={formData.nome}
               onChange={handleChange}
-            />
+            /> */}
           </div>
           <div className="mb-4">
-            <input
+          <Input
+              placeholder="Email"
+              value={formData.email}
+              onChange={(value) => setFormData({ ...formData, email: value})}
+              onConfirm={() => handleSubmit()}
+            />
+            {/* <input
               type="email"
               name="email"
               placeholder="Email"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
               value={formData.email}
               onChange={handleChange}
-            />
+            /> */}
           </div>
-          <div className="mb-6">
+          <Input
+              placeholder="Telefone"
+              value={formData.telefone}
+              onChange={(value) => setFormData({ ...formData, telefone: value})}
+              onConfirm={() => handleSubmit()}
+            />
+          {/* <div className="mb-6">
             <input
               type="tel"
               name="telefone"
@@ -61,7 +76,7 @@ export const Checkout = () => {
               value={formData.telefone}
               onChange={handleChange}
             />
-          </div>
+          </div> */}
           <div className="mt-6 mb-4 flex flex-col items-center">
             <img
               src={Qrcode}

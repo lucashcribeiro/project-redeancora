@@ -1,14 +1,11 @@
-import React from 'react'
-
-export default function cartBg( {children, isTrue} ) {
-    if(isTrue){
+export default function cartBg({ children, isTrue }) {
   return (
-    <div className='h-72 bg-white pt-4 flex-col overflow-scroll'>
+    <div
+      className={`h-100 max-h-[50vh] overflow-y-scroll bg-white flex-col transition-all ${
+        isTrue ? " h-[50vh]" : " h-[0]"
+      }  overflow-hidden px-4 custom-scroll`}
+    >
       {children}
     </div>
-  )
-}
-else{
-    return null
-}
+  );
 }

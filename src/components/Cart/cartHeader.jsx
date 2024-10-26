@@ -1,17 +1,15 @@
-import React from "react";
 import { useCart } from "../../context/cart";
 
-export default function CartHeader({ event, isTrue }) {
-  let position = isTrue ? "bottom-56" : "bottom-0"; // Define a posição do header com base em isTrue (true/false) lógica no App.jsx
-
+export default function CartHeader({event}) {
   const { calculateTotal } = useCart();
+
   return (
     <>
       <div
-        className={`w-[100%] h-16 border bg-azul-ancora flex items-center p-4 cursor-pointer `} //variavel que define a position na tela
+        className="w-full bg-azul-ancora flex items-center object-center cursor-pointer px-4" 
         onClick={event}
       >
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center justify-between w-full h-[80px]">
           <div className="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +32,7 @@ export default function CartHeader({ event, isTrue }) {
           </p>
         </div>
 
-        <button className="absolute right-5 top-7">
+        <button>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

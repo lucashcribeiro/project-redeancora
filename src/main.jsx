@@ -9,6 +9,12 @@ import { register } from "swiper/element/bundle";
 import { Checkout } from "./routes/checkout";
 import Thanks from "./routes/checkout/thanks";
 
+import {
+  KeyboardProvider,
+  KeyboardContent,
+  KeyboardTrigger,
+} from "./components/keyboard";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,15 +29,20 @@ const router = createBrowserRouter([
     element: <Checkout />,
   },
   {
-    path:'/thanks',
+    path: "/thanks",
     element: <Thanks />,
-  }
+  },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <CartProvider>
-      <RouterProvider router={router} />
-    </CartProvider>
+    <KeyboardProvider>
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
+
+      <KeyboardContent />
+      <KeyboardTrigger />
+    </KeyboardProvider>
   </React.StrictMode>
 );
 

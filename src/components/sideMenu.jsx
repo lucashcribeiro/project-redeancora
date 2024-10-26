@@ -2,8 +2,7 @@ import ButtonSide from './buttonSide';
 
 export default function SideMenu() {
   return (
-    <div className='flex flex-col  gap-1'>
-      <ButtonSide texto='Busca por item' />
+    <div className='flex flex-col gap-1'>
       <ButtonSide texto='Motor e Componentes' />
       <ButtonSide texto='Transmissão' />
       <ButtonSide texto='Sistema de freio' />

@@ -6,10 +6,11 @@ import Produto from "../../components/produto";
 // import Filter from "../../components/filter";
 import { useEffect, useState } from "react";
 import { fetchData } from "../../service/api";
-import Teclado from "../../components/teclado";
+// import Teclado from "../../components/teclado";
 import Cart from "../../components/Cart/cart";
 import { useSearchParams } from "react-router-dom";
 import Partners from "../../components/partners";
+import Fuse from "fuse.js";
 
 const Loja = () => {
   const [products, setProducts] = useState([]);
@@ -21,30 +22,39 @@ const Loja = () => {
   const params = useSearchParams();
   const placa = params[0].get("placa");
 
+  /** 
+    Utilizando a lib Fuse.js para nos auxiliar
+    https://www.fusejs.io
+
+    !IMPORTANT - toda vez que é re-renderizado a rota atual, é gerado o fuse novamente, isso não é legal mas funciona
+    Para corrigir isso é preciso desestruturar a rota para componentes cuja as responsabilidades são separadas    
+  */
+  const fuse = new Fuse(products, {
+    keys: [
+      "marca",
+      "nomeProduto",
+      "informacoesComplementares",
+      "codigoReferencia",
+      "csa",
+      "cna",
+    ],
+  });
+  const filteredProducts =
+    search.length > 0 ? fuse.search(search).map((i) => i.item) : [];
+
   const mostraCarrinho = () => {
     setOpenCart(!openCart);
-  };
-
-  const tipoFiltro = "fabricante";
-
-  const searchByName = () => {
-    const filteredProducts = products.filter((product) => {
-      if (tipoFiltro === "nomePeca") {
-        return product.nomeProduto.toLowerCase().includes(search.toLowerCase());
-      } else if (tipoFiltro === "fabricante") {
-        return product.marca.toLowerCase().includes(search.toLowerCase());
-      }
-    });
-
-    setProducts(filteredProducts);
   };
 
   async function loadData() {
     try {
       // Caso nao exista valor na placa ele vai retornar por padrao a placa gao3f58 # IF Ternario
-      const response = await fetchData(placa ? placa : "gao3f58");
-      setCarro(response.pageResult.vehicle);
-      setProducts(response.pageResult.data);
+      const {
+        pageResult: { data, vehicle },
+      } = await fetchData(placa || "eud4801");
+
+      setCarro(vehicle);
+      setProducts(data);
     } catch (error) {
       console.log("Error", error);
     }
@@ -54,76 +64,68 @@ const Loja = () => {
     loadData();
   }, []);
 
-  useEffect(() => {
-    if (search === "") {
-      loadData();
-    }
-    searchByName();
-  }, [search]);
-
   return (
     <>
-      <div className="container h-screen bg-astronaut-blue-20 relative">
-        {activeInput && (
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "100%",
-              background: "#FFFFFF",
-            }}
-          >
-            <Teclado setSearch={setSearch} setActiveInput={setActiveInput} />
-          </div>
-        )}
-        <section className="grid grid-cols-4 h-full overflow-hidden">
+      <div className="flex flex-col w-full h-full relative">
+        <div className="w-full">
           <Propaganda />
+        </div>
 
-          <div className="col-start-1 row-start-3">
-            <aside className="mt-3 flex">
-              <SideMenu />
-            </aside>
-          </div>
-          <article className="col-start-1 col-span-1 gap-3 my-3">
+        <div className="flex w-full h-full *:h-full">
+          <aside className="w-[30%] flex flex-col">
             <Partners />
-          </article>
-          <article className="col-start-2 col-span-2 gap-3 my-3">
-            <div className=" col-span-3 items-start gap-3 mx-3">
+
+            <div style={{ flex: "1 1 0" }} className="h-full overflow-y-auto custom-scroll">
+              <SideMenu />
+            </div>
+          </aside>
+
+          <main className="w-[70%] flex flex-col">
+            <header>
               <SearchBar
                 activeInput={activeInput}
                 setActiveInput={setActiveInput}
                 search={search}
                 setSearch={setSearch}
               />
-              <div className="flex gap-5">
-                <ButtonFilter
-                  texto="Nome da peça"
-                  className="textActiveButton w-full"
-                ></ButtonFilter>
-                <ButtonFilter
-                  texto="Fabricante"
-                  className="textInativeButton w-full"
-                ></ButtonFilter>
+
+              <ButtonFilter
+                texto="Nova Busca"
+                className="textInativeButton w-full m-2"
+                onClick={() => {
+                  setSearch("");
+                  setActiveInput(true);
+                }}
+              ></ButtonFilter>
+
+              <div className="my-3">
+                <p className="font-bold">
+                  Modelo: <span className="font-normal">{carro.modelo}</span>
+                </p>
+                <p className="font-bold">
+                  Montadora:{" "}
+                  <span className="font-normal">{carro.montadora}</span>
+                </p>
+              </div>
+            </header>
+
+            <div
+              style={{ flex: "1 1 0" }}
+              className="h-full overflow-y-scroll custom-scroll"
+            >
+              <div className="m-3 grid grid-cols-3 gap-3 pb-3">
+                {products.length > 0 &&
+                  (search.length > 0 ? filteredProducts : products).map(
+                    (product) => <Produto key={product.id} {...product} />
+                  )}
               </div>
             </div>
-          </article>
-          <div className="col-start-4  my-3">
-            <p className="font-bold">
-              Modelo: <span className="font-normal">{carro.modelo}</span>
-            </p>
-            <p className="font-bold">
-              Montadora: <span className="font-normal">{carro.montadora}</span>
-            </p>
-          </div>
-          <div className="col-start-2 col-span-3 m-3 overflow-y-scroll grid grid-cols-3 gap-3 pb-3">
-            {products.length > 0 &&
-              products.map((product) => (
-                <Produto key={product.id} {...product} />
-              ))}
-          </div>
+          </main>
+        </div>
+
+        <div className="w-full h-[80px] flex-shrink-0">
           {!activeInput && <Cart event={mostraCarrinho} isTrue={openCart} />}
-        </section>
+        </div>
       </div>
     </>
   );

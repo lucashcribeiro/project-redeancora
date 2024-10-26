@@ -6,7 +6,7 @@ import banner4 from "/public/banner/header-4.png";
 
 export default function Propaganda() {
   return (
-    <div className="col-start-1 col-span-4  items-center">
+    <div className="items-center">
       <swiper-container
         slides-per-view="1"
         space-between="20"

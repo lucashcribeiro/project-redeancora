@@ -1,17 +1,28 @@
+@tailwind components;
+@tailwind utilities;
+@tailwind base;
+
+#root {
+  position: relative;
+  overflow-y: auto;
+  overflow-x: none;
+  width: 100vw;
+  height: 100vh;
+}
+
 .Nunito {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: bold;
 }
+
 .textInativeButton {
-  @apply Nunito text-astronaut-blue-950 border-solid border-2 border-astronaut-blue-950 mt-3 px-2 py-2 rounded-md;
+  @apply Nunito text-astronaut-blue-950 border-solid border-2 border-astronaut-blue-950 px-2 py-2 rounded-md;
 }
 .textActiveButton {
   @apply bg-astronaut-blue-950 text-astronaut-blue-50 Nunito mt-3 px-2 py-2 rounded-md border-solid border-2 border-astronaut-blue-900;
 }
-
-@tailwind base;
 
 .Button {
   @apply bg-astronaut-blue-950 py-3 px-2 rounded-2xl uppercase hover:bg-vermelho-ancora ease-in duration-300;
@@ -24,5 +35,18 @@
   @apply container p-8;
 }
 
-@tailwind components;
-@tailwind utilities;
+.custom-scroll::-webkit-scrollbar {
+  width: 4px;
+  background: transparent;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 20px 0;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #e4e4e4;
+  border-radius: 10px;
+}
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #d6d6d6;
+}

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useCart } from "../context/cart";
-import defaultImage from "/public/default.png";
+// import defaultImage from "/public/default.png";
 
 export default function Produto(props) {
   const { addToCart } = useCart();
@@ -27,11 +27,11 @@ export default function Produto(props) {
     <div className="flex p-3 flex-wrap flex-row content-between justify-center  rounded-md  shadow-sm bg-astronaut-blue-20">
       <div>
         <img
-          src={`https://catalogopdtstorage.blob.core.windows.net/imagens-prd/produto/${
-            props.imagemReal ?? defaultImage
-          }`}
+          src={`https://catalogopdtstorage.blob.core.windows.net/imagens-prd/produto/${props.imagemReal}`}
           alt="Imagem do Produto"
           className="rounded-t-md aspect-9/10 object-contain max-h-[200px]"
+          // Quando a imagem retornar com um erro é automaticamente colocado uma Imagem Placeholder no lugar
+          onError={(e) => e.currentTarget.setAttribute("src", "https://placehold.co/600x600")}
         />
         <p className="font-bold Nunito">{props.nomeProduto}</p>
         <p className="font-bold Nunito">{props.marca}</p>
